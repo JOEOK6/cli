@@ -158,7 +158,7 @@ const exec = async (opts) => {
     const globalArb = new Arborist({ ...flatOptions, path: globalPath, global: true })
     const globalTree = await globalArb.loadActual()
     const globalManifest = await missingFromTree({ spec, tree: globalTree, flatOptions })
-    if (!globalManifest) {
+    if (!globalManifest && await fileExists(`${globalBin}/${args[0]}`)) {
       binPaths.push(globalBin)
       return await run()
     }
